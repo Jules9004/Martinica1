@@ -1,13 +1,15 @@
 import React, { Fragment} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { addItemToCart, removeItemFromCart } from '../../actions/cartActions'
 import MetaData from '../layout/MetaData'
-import CurrencyFormat from'react-currency-format'
+
 
 const Cart = () => {
+    const navigate=useNavigate()
     const dispatch= useDispatch();
     const {cartItems} = useSelector(state => state.cart)
+    const {user} =useSelector(state => state.auth)
 
     const increaseQty = (id, quantity, inventario) => {
         const newQty = quantity+1;
@@ -21,6 +23,15 @@ const Cart = () => {
         dispatch(addItemToCart(id, newQty))
    }
 
+   const checkOutHandler = () =>{
+        if (user){
+            navigate("/shipping")
+        }
+        else{
+            navigate("/login")
+        }
+   }
+
    const removeCartItemHandler= (id)=>{
     dispatch(removeItemFromCart(id))
    }
@@ -29,7 +40,6 @@ const Cart = () => {
         <Fragment>
             <MetaData title={'Mi carrito'} />
             
-
             {cartItems.length === 0 ? <h2 className="mt-5">Su carrito esta vacio</h2> : (
                 <Fragment>
                     
@@ -70,12 +80,10 @@ const Cart = () => {
                                             <div className="col-4 col-lg-1 mt-4 mt-lg-0">
                                                 <i id="delete_cart_item" className="fa fa-trash btn btn-danger" onClick={() => removeCartItemHandler(item.product)}></i>
                                             </div>
-
                                         </div>
                                     </div>
                                     <hr />
                                 </Fragment>
-                            
                         ))}
                         </div>
 
@@ -84,11 +92,10 @@ const Cart = () => {
                                 <h4>Total de la Compra</h4>
                                 <hr />
                                 <p>Productos:  <span className="order-summary-values">{cartItems.reduce((acc, item)=>(acc+Number(item.quantity)),0)} (Unidades)</span></p>
-                                <p>Valor Total<CurrencyFormat value={cartItems.reduce((acc, item)=> acc+(item.quantity*item.precio),0).toFixed(2)} displayType={'text'} thousandSeparator={true} prefix={'$'} renderText={value => <div>{value}</div>} /></p>
-
+                                <p>Est. total: <span className="order-summary-values">${cartItems.reduce((acc, item)=> acc+(item.quantity*item.precio),0).toFixed(2)}</span></p>
 
                                 <hr />
-                                <button id="checkout_btn" className="btn btn-primary btn-block">Comprar!</button>
+                                <button id="checkout_btn" className="btn btn-primary btn-block" onClick={checkOutHandler}>Comprar!</button>
                             </div>
                         </div>
                     </div>

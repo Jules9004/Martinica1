@@ -8,6 +8,7 @@ import { logout} from "../actions/userActions"
 
 const Header = () => {
     const {cartItems} = useSelector(state=>state.cart)
+    
     const alert= useAlert();
     const dispatch= useDispatch();
 
@@ -27,8 +28,8 @@ const Header = () => {
                 </div>
 
                 <div className='col-12 col-md-5 mt-2 mt-md-0'>
-                {/*Aquí busca*/}
-                <Search />
+                    {/*Aqui va buscar*/}
+                    <Search />
                 </div>
                 {/*Boton inicio sesión*/}
                 <div className="col-12 col-md-4 mt-4 mt-md-0 text-center">
@@ -50,10 +51,10 @@ const Header = () => {
                             <div className='dropdown-menu' aria-labelledby='dropDownMenu'>
                                 {/*Preguntamos el rol de quien esta online*/}
                                 {user && user.role === "admin" && (
-                                    <Link className="dropdown-item" to="/dashboard">Adm. Productos</Link>
+                                    <Link className="dropdown-item" to="/dashboard">Dashboard</Link>
                                 )}
 
-                                <Link className="dropdown-item" to="/">Pedidos</Link>
+                                <Link className="dropdown-item" to="/myOrders">Pedidos</Link>
                                 <Link className="dropdown-item" to="/yo">Mi Perfil</Link>
                                 <Link className="dropdown-item" to="/" onClick={logoutHandler}>Cerrar Sesion</Link>
                             </div>

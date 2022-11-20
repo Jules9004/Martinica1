@@ -3,8 +3,8 @@ const { registroUsuario,
     loginUser, 
     logOut, 
     forgotPassword, 
-    resetPassword,
-    getUserProfile,
+    resetPassword, 
+    getUserProfile, 
     updatePassword,
     updateProfile,
     getAllUsers,
@@ -13,12 +13,12 @@ const { registroUsuario,
     deleteUser
 } = require("../controllers/authController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
-const router= require ("express").Router();
+const router= express.Router();
 
 router.route('/usuario/registro').post(registroUsuario)
 router.route('/login').post(loginUser)
 router.route('/logout').get(isAuthenticatedUser, logOut)
-router.route('/forgotPassword').post(forgotPassword)
+router.route("/forgotPassword").post(forgotPassword)
 router.route('/resetPassword/:token').post(resetPassword)
 router.route('/me').get(getUserProfile)
 router.route('/me/updatePassword').put(isAuthenticatedUser, updatePassword)

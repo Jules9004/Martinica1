@@ -231,7 +231,7 @@ exports.updateUser= catchAsyncErrors(async(req, res, next)=>{
         role: req.body.rol
     }
 
-    const usser= await User.findByIdAndUpdate(req.params.id, nuevaData, {
+    const user= await User.findByIdAndUpdate(req.params.id, nuevaData, {
         new: true,
         runValidators: true,
         useFindAndModify:false
@@ -259,7 +259,7 @@ exports.deleteUser= catchAsyncErrors(async(req, res, next)=>{
     })
 })
 
-exports.inactiveuser = catchAsyncErrors(async(req, res, next)=>{
+/* exports.inactiveuser = catchAsyncErrors(async(req, res, next)=>{
     const user = await User.findById(req.params.id);
     if(!user){
         message:"Se ha inactivado su usuario"
@@ -269,4 +269,4 @@ exports.inactiveuser = catchAsyncErrors(async(req, res, next)=>{
         success: true,
         message:"Se inactivó el usuario correctamente"
    })
-});
+}); */
